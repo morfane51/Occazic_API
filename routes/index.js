@@ -56,3 +56,20 @@ router.get('/user/:id', auth, user.findOne)
 router.get('/user', auth, user.findAll)
 
 module.exports = router;
+
+// Route for calcul
+const category = require("../controllers/category.controller.js");
+
+// Create fonction
+router.post('/category', auth, category.create);
+
+// Modify fonction
+router.put('/category/:id', auth, category.update);
+
+// Get fonction
+router.get('/category/:id', category.findOne);
+router.get('/category', category.findAll);
+
+// Delete fonction
+router.delete('/category/:id', auth, category.delete);
+router.delete('/category', auth, category.deleteAll);

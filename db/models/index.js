@@ -9,5 +9,6 @@ db.url = dbConfig.url;
 db.price_estimate = require("./price_estimate.model.js")(mongoose);
 db.accurate_estimate = require("./accurate_estimate.model.js")(mongoose);
 db.user = require("./user.model.js")(mongoose);
+db.category = require("./category.model.js")(mongoose);
 
 module.exports = db;
