@@ -57,7 +57,7 @@ router.get('/user', auth, user.findAll)
 
 module.exports = router;
 
-// Route for calcul
+// Route for category
 const category = require("../controllers/category.controller.js");
 
 // Create fonction
@@ -73,3 +73,34 @@ router.get('/category', category.findAll);
 // Delete fonction
 router.delete('/category/:id', auth, category.delete);
 router.delete('/category', auth, category.deleteAll);
+
+// Route for calcul
+const calcul = require("../controllers/calcul.controller.js");
+
+// Calcul function
+router.post('/calcul', calcul.run);
+
+// Get fonction
+router.get('/calcul/:id', auth, calcul.findOne);
+router.get('/calcul', auth, calcul.findAll);
+
+// Delete fonction
+router.delete('/calcul/:id', auth, calcul.delete);
+router.delete('/calcul', auth, calcul.deleteAll);
+
+// Route for arguments
+const val_func = require("../controllers/valeur_function.controller.js");
+
+// Create fonction
+router.post('/val_func', auth, val_func.create);
+
+// Modify fonction
+router.put('/val_func/:id', auth, val_func.update);
+
+// Get fonction
+router.get('/val_func/:id', val_func.findOne);
+router.get('/val_func', val_func.findAll);
+
+// Delete fonction
+router.delete('/val_func/:id', auth, val_func.delete);
+router.delete('/val_func', auth, val_func.deleteAll);

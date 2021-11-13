@@ -1,27 +1,28 @@
 const db = require("../db/models");
+const Valeur_function = db.Val_func;
 const Category = db.Category;
-const Val_func = db.Val_func;
-
-//TODO : La fonction correspondnate a la categorie doit etre stocké dans une table differente, pour eviter qu'un appel GET non authentifié recupére la fonction de calcul.
 
 // Create category with function
 exports.create = async (req, res) => {
 // Validate request
-    if (!req.body.function) {
+    if (!req.body.catID) {
         res.status(400).send({message: "Content can not be empty!"});
         return;
     }
+    // Front pass category id
+    const category = await Category.findById(req.body.catID)
     // Create a request
-    const addCategory = new Category({
+    const addVal_func = new Valeur_function({
         name: req.body.name,
-        function: req.body.function
+        val_func: req.body.val_func,
+        category: category._id
     });
-    console.log(addCategory);
-    console.log(addCategory);
+    console.log(addVal_func);
+    console.log(addVal_func.id);
 
     // Save request in mongodb
-    addCategory
-        .save(addCategory)
+    addVal_func
+        .save(addVal_func)
         .then(data => {
             res.send(data);
         })
@@ -43,7 +44,7 @@ exports.update = (req, res) => {
     // Recover request with ID
     const id = req.params.id;
     // Modify a request
-    Category.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
+    Valeur_function.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
         .then(data => {
             if (!data) {
                 res.status(404).send({
@@ -63,7 +64,7 @@ exports.delete = (req, res) => {
     // Recover request with id
     const id = req.params.id;
     // Delete request
-    Category.findByIdAndRemove(id)
+    Valeur_function.findByIdAndRemove(id)
         .then(data => {
             if (!data) {
                 res.status(404).send({
@@ -84,7 +85,7 @@ exports.delete = (req, res) => {
 
 // Delete All category
 exports.deleteAll = (req, res) => {
-    Category.deleteMany({})
+    Valeur_function.deleteMany({})
         .then(data => {
             res.send({
                 message: `${data.deletedCount} category were deleted successfully!`
@@ -102,10 +103,13 @@ exports.deleteAll = (req, res) => {
 exports.findOne = (req, res) => {
     // Recover request with id
     const id = req.params.id;
+    console.log(id);
 
-    Category
-        .findById(id)
-        .populate('val_func')
+    Valeur_function.findById(id)
+        /*.populate({
+            path:"category",
+            model:"Category"
+        })*/
         .then(data => {
             if (!data)
                 res.status(404).send({message: "Not found category with id " + id});
@@ -124,17 +128,18 @@ exports.findAll = (req, res) => {
     const name = req.query.name;
     var condition = name ? {name: {$regex: new RegExp(name), $options: "i"}} : {};
 
-    Category
-        .find(condition)
-        .populate('val_func') // <- use the populate() function
+    Valeur_function.find(condition)
+        /*.populate({
+            path:"category",
+            model:"Category"
+        })*/
         .then(data => {
-            if (!data)
-                res.status(404).send({message: "Not found category with id " + id});
-            else res.send(data);
+            res.send(data);
         })
         .catch(err => {
-            res
-                .status(500)
-                .send({message: "Error retrieving category with id=" + id});
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving category."
+            });
         });
 };

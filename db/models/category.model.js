@@ -1,11 +1,23 @@
-module.exports = mongoose => {
-    var schema = new mongoose.Schema(
-        {
-            name: { type: String, required: true },
-            function: { type: String, required: true }
-        },
-        {timestamps: true}
-    );
+const mongoose = require('mongoose');
 
-    return mongoose.model("category", schema);
-};
+var catSchema = new mongoose.Schema(
+    {
+
+        name: {type: String, required: true},
+        function: {type: String, required: true},
+    }, {
+        timestamps: true,
+        toJSON: {virtuals: true},
+        toObject: {virtuals: true}
+    }
+);
+
+catSchema.virtual("val_func", {
+    ref: "Val_func",
+    foreignField: "category",
+    localField: "_id"
+})
+
+const category = mongoose.model('Category', catSchema);
+
+module.exports = category;
