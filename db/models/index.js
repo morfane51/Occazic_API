@@ -12,6 +12,7 @@ db.user = require("./user.model.js")(mongoose);
 db.Category = require("./category.model.js");
 db.Calcul = require("./calcul.model.js")(mongoose);
 db.Val_func = require("./valeur_function.model.js")(mongoose);
+db.Input_func = require("./input_function.model.js")(mongoose);
 
 
 module.exports = db;

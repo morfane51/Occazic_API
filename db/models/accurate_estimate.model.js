@@ -4,7 +4,7 @@ module.exports = mongoose => {
             name: String,
             surname: String,
             mail: { type: String, required: true },
-            product_category: { type: String, required: true },
+            product_category_id: { type: String, required: true },
             product_ref: String,
             purchase_price: { type: Number, required: true },
             sell_price: Number,

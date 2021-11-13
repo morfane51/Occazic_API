@@ -2,7 +2,7 @@ module.exports = mongoose => {
     var valfuncSchema = new mongoose.Schema(
         {
             name: {type: String, required: true},
-            val_func: String,
+            val_func: Array,
             category: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Category'

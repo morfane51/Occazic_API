@@ -5,11 +5,20 @@ module.exports = mongoose => {
             name: String,
             surname: String,
             mail: { type: String, required: true },
-            product_category: { type: String, required: true },
+            product_category_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Category',
+                required: true
+            },
             product_ref: String,
-            purchase_price: { type: Number, required: true },
-            purchase_date: { type: Date, required: true },
-            propose_price: Number
+            input_func_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Input_func'
+            },
+            calcul_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Calcul'
+            }
         },
         {timestamps: true}
     );

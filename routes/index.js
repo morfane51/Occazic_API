@@ -104,3 +104,20 @@ router.get('/val_func', val_func.findAll);
 // Delete fonction
 router.delete('/val_func/:id', auth, val_func.delete);
 router.delete('/val_func', auth, val_func.deleteAll);
+
+// Route for arguments value
+const input_func = require("../controllers/input_function.controller.js");
+
+// Create arguments value
+router.post('/input_func', input_func.create);
+
+// Modify arguments value
+router.put('/input_func/:id', auth, input_func.update);
+
+// Get arguments value
+router.get('/input_func/:id', input_func.findOne);
+router.get('/input_func', input_func.findAll);
+
+// Delete arguments value
+router.delete('/input_func/:id', auth, input_func.delete);
+router.delete('/input_func', auth, input_func.deleteAll);

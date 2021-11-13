@@ -1,28 +1,26 @@
 const db = require("../db/models");
-const Price_estim = db.price_estimate;
+const Input_func = db.Input_func;
 
 // Create request for estimate price
 exports.create = (req, res) => {
 // Validate request
-    if (!req.body.name) {
+    if (!req.body.value) {
         res.status(400).send({message: "Content can not be empty!"});
         return;
     }
 
     // Create a request
-    const priceEstim = new Price_estim({
-        name: req.body.name,
-        surname: req.body.surname,
-        mail: req.body.mail,
-        product_category_id: req.body.product_category_id,
-        product_ref: req.body.product_ref
+    const inputFunc = new Input_func({
+        value: req.body.value,
+        price_estimate_id: req.body.price_estimate_id,
+        val_func_id: req.body.val_func_id
     });
-    console.log(priceEstim);
-    console.log(priceEstim.id);
+    console.log(inputFunc);
+    console.log(inputFunc.id);
 
     // Save request in mongodb
-    priceEstim
-        .save(priceEstim)
+    inputFunc
+        .save(inputFunc)
         .then(data => {
             res.send(data);
         })
@@ -44,7 +42,7 @@ exports.update = (req, res) => {
     // Recover request with ID
     const id = req.params.id;
     // Modify a request
-    Price_estim.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
+    Input_func.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
         .then(data => {
             if (!data) {
                 res.status(404).send({
@@ -64,7 +62,7 @@ exports.delete = (req, res) => {
     // Recover request with id
     const id = req.params.id;
     // Delete request
-    Price_estim.findByIdAndRemove(id)
+    Input_func.findByIdAndRemove(id)
         .then(data => {
             if (!data) {
                 res.status(404).send({
@@ -85,7 +83,7 @@ exports.delete = (req, res) => {
 
 // Delete All request
 exports.deleteAll = (req, res) => {
-    Price_estim.deleteMany({})
+    Input_func.deleteMany({})
         .then(data => {
             res.send({
                 message: `${data.deletedCount} request were deleted successfully!`
@@ -104,9 +102,9 @@ exports.findOne = (req, res) => {
     // Recover request with id
     const id = req.params.id;
 
-    Price_estim
+    Input_func
         .findById(id)
-        .populate('product_category_id')
+        .populate('price_estimate_id val_func_id')
         .then(data => {
             if (!data)
                 res.status(404).send({message: "Not found request with id " + id});
@@ -122,12 +120,12 @@ exports.findOne = (req, res) => {
 // Retrieve all request with condition
 exports.findAll = (req, res) => {
     // Recover request with name
-    const name = req.query.name;
+    const name = req.query.value;
     var condition = name ? {name: {$regex: new RegExp(name), $options: "i"}} : {};
 
-    Price_estim
+    Input_func
         .find(condition)
-        .populate('product_category_id')
+        .populate('price_estimate_id val_func_id')
         .then(data => {
             res.send(data);
         })

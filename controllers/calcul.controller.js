@@ -2,7 +2,9 @@ const db = require("../db/models");
 const Calcul = db.Calcul;
 const Category = db.Category;
 const Val_func = db.Val_func;
+const Price_estim = db.price_estimate
 var mathjs = require('mathjs');
+
 //TODO: Probleme possible avec calcul
 
 // Calcul
@@ -13,11 +15,14 @@ exports.run = async (req, res) => {
         return;
     }
     // Front pass category id
-    const category = await Category.findById(req.body.catID);
+
+    const priceEstim = await Price_estim.findById(req.body.price_estimID);
+    const category = await Category.findById(priceEstim.product_category_id);
     // Create a request
     const calcul = new Calcul({
         function: category.function,
         category: category._id,
+        price_estimate: priceEstim._id,
         propose_price: await runCalcul(category.function)
     });
     console.log(calcul);
