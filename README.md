@@ -22,6 +22,6 @@ Endpoint | HTTP Method |  JSON Body  | Description
 `/val_func/:id` | `GET` |  | Found on valeur function with id.
 `/val_func` | `GET` |  | Found all valeur function.
 `/val_func/:id` | `DELETE` |  | Delete one valeur function.
-`/val_func` | `DELETE` | Delete all valeur function.
+`/val_func` | `DELETE` |  | Delete all valeur function.
 
 
