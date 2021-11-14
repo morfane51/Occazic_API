@@ -50,10 +50,15 @@ router.post('/user/signup', user.signup);
 router.post('/user/login', user.login);
 
 // Get info for one user
-router.get('/user/:id', auth, user.findOne)
+router.get('/user/:id', auth, user.findOne);
+router.get('/user', auth, user.findAll);
 
-// Get info for all user
-router.get('/user', auth, user.findAll)
+// Modify user
+router.put('/user', auth, user.update);
+
+// Delete user
+router.delete('/user', auth, user.delete);
+router.delete('/user/:id', auth, user.deleteAll);
 
 module.exports = router;
 
