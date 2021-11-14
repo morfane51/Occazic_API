@@ -2,7 +2,8 @@ const db = require("../db/models");
 const Calcul = db.Calcul;
 const Category = db.Category;
 const Val_func = db.Val_func;
-const Price_estim = db.price_estimate
+const Price_estim = db.price_estimate;
+const Input_func = db.Input_func;
 var mathjs = require('mathjs');
 
 //TODO: Probleme possible avec calcul
@@ -10,7 +11,7 @@ var mathjs = require('mathjs');
 // Calcul
 exports.run = async (req, res) => {
 // Validate request
-    if (!req.body.function) {
+    if (!req.body.price_estimID) {
         res.status(400).send({message: "Content can not be empty!"});
         return;
     }
@@ -46,24 +47,37 @@ exports.run = async (req, res) => {
         const tab_val = [];
         var globalFunction = func;
         while (globalFunction.includes('{')) {
+            // Found var with special characters
             var t_val = globalFunction.substring(
                 globalFunction.indexOf("{") + 1,
                 globalFunction.indexOf("}")
             );
 
+            // Replace var with unique code
             var var_t_val = '{' + t_val + '}';
             globalFunction = globalFunction.replace(var_t_val, "213478")
 
-            const condition = {name: t_val, category: category._id};
-            const val_func = await Val_func.findOne(condition);
-            tab_val.push(val_func.val_func);
+            const priceEstim_id = priceEstim._id;
+            const category_id = category._id;
+
+
+            const condition_val = {name: t_val, category: category_id};
+            const val_func = await Val_func.findOne(condition_val);
+
+            const valFunc_id = val_func._id
+
+            const condition = {price_estimate_id: priceEstim_id, val_func_id: valFunc_id};
+            const input_func = await Input_func.findOne(condition);
+            tab_val.push(input_func.value);
 
         }
         var i = 0;
+        // Replace unique code with value func_val
         while (globalFunction.includes('213478')) {
             globalFunction = globalFunction.replace("213478", tab_val[i]);
             i = i + 1;
         }
+        // Calcul function
         var calcul_globalFunction = mathjs.evaluate(globalFunction);
         console.log(calcul_globalFunction);
 
