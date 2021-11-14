@@ -15,7 +15,6 @@ exports.create = async (req, res) => {
     const addVal_func = new Valeur_function({
         name: req.body.name,
         array: req.body.array,
-        array_val_func: req.body.array_val_func,
         category: category._id
     });
     console.log(addVal_func);

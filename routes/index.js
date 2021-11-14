@@ -121,3 +121,20 @@ router.get('/input_func', input_func.findAll);
 // Delete arguments value
 router.delete('/input_func/:id', auth, input_func.delete);
 router.delete('/input_func', auth, input_func.deleteAll);
+
+// Route for array value
+const array_val_func = require("../controllers/array_value_function.controller");
+
+// Create array value
+router.post('/array_val', array_val_func.create);
+
+// Modify array value
+router.put('/array_val/:id', auth, array_val_func.update);
+
+// Get array value
+router.get('/array_val/:id', array_val_func.findOne);
+router.get('/array_val', array_val_func.findAll);
+
+// Delete array value
+router.delete('/array_val/:id', auth, array_val_func.delete);
+router.delete('/array_val', auth, array_val_func.deleteAll);
