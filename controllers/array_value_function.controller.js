@@ -1,41 +1,38 @@
 const db = require("../db/models");
-const Valeur_function = db.Val_func;
-const Category = db.Category;
+const Array_val_func = db.Array_val_func;
 
-// Create category with function
-exports.create = async (req, res) => {
+// Create request for estimate price
+exports.create = (req, res) => {
 // Validate request
-    if (!req.body.catID) {
+    if (!req.body.value) {
         res.status(400).send({message: "Content can not be empty!"});
         return;
     }
-    // Front pass category id
-    const category = await Category.findById(req.body.catID)
+
     // Create a request
-    const addVal_func = new Valeur_function({
+    const arrayValFunc = new Array_val_func({
         name: req.body.name,
-        array: req.body.array,
-        array_val_func: req.body.array_val_func,
-        category: category._id
+        value: req.body.value,
+        val_func_id: req.body.val_func_id
     });
-    console.log(addVal_func);
-    console.log(addVal_func.id);
+    console.log(arrayValFunc);
+    console.log(arrayValFunc.id);
 
     // Save request in mongodb
-    addVal_func
-        .save(addVal_func)
+    arrayValFunc
+        .save(arrayValFunc)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the category."
+                    err.message || "Some error occurred while creating the request."
             });
         });
 };
 
-// Modify category or function
+// Modify request for estimate price
 exports.update = (req, res) => {
 // Validate request
     if (!req.body) {
@@ -45,13 +42,13 @@ exports.update = (req, res) => {
     // Recover request with ID
     const id = req.params.id;
     // Modify a request
-    Valeur_function.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
+    Array_val_func.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
         .then(data => {
             if (!data) {
                 res.status(404).send({
-                    message: `Cannot update category with id=${id}. Maybe category was not found!`
+                    message: `Cannot update request with id=${id}. Maybe request was not found!`
                 });
-            } else res.send({message: "Category was updated successfully."});
+            } else res.send({message: "Request was updated successfully."});
         })
         .catch(err => {
             res.status(500).send({
@@ -60,87 +57,82 @@ exports.update = (req, res) => {
         });
 };
 
-// Delete category
+// Delete request for estimate price
 exports.delete = (req, res) => {
     // Recover request with id
     const id = req.params.id;
     // Delete request
-    Valeur_function.findByIdAndRemove(id)
+    Array_val_func.findByIdAndRemove(id)
         .then(data => {
             if (!data) {
                 res.status(404).send({
-                    message: `Cannot delete category with id=${id}. Maybe category was not found!`
+                    message: `Cannot delete request with id=${id}. Maybe request was not found!`
                 });
             } else {
                 res.send({
-                    message: "Category was deleted successfully!"
+                    message: "Request was deleted successfully!"
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete category with id=" + id
+                message: "Could not delete request with id=" + id
             });
         });
 };
 
-// Delete All category
+// Delete All request
 exports.deleteAll = (req, res) => {
-    Valeur_function.deleteMany({})
+    Array_val_func.deleteMany({})
         .then(data => {
             res.send({
-                message: `${data.deletedCount} category were deleted successfully!`
+                message: `${data.deletedCount} request were deleted successfully!`
             });
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while removing all category."
+                    err.message || "Some error occurred while removing all request."
             });
         });
 };
 
-// Retrieve a single category
+// Retrieve a single request
 exports.findOne = (req, res) => {
     // Recover request with id
     const id = req.params.id;
-    console.log(id);
 
-    Valeur_function.findById(id)
-        /*.populate({
-            path:"category",
-            model:"Category"
-        })*/
+    Array_val_func
+        .findById(id)
+        .populate('val_func_id')
         .then(data => {
             if (!data)
-                res.status(404).send({message: "Not found category with id " + id});
+                res.status(404).send({message: "Not found request with id " + id});
             else res.send(data);
         })
         .catch(err => {
             res
                 .status(500)
-                .send({message: "Error retrieving category with id=" + id});
+                .send({message: "Error retrieving request with id=" + id});
         });
 };
 
-// Retrieve all category with condition
+// Retrieve all request with condition
 exports.findAll = (req, res) => {
     // Recover request with name
-    const name = req.query.name;
+    const name = req.query.value;
     var condition = name ? {name: {$regex: new RegExp(name), $options: "i"}} : {};
 
-    Valeur_function.find(condition)
-        /*.populate({
-            path:"category",
-            model:"Category"
-        })*/
+    Array_val_func
+        .find(condition)
+        .populate('val_func_id')
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving category."
+                    err.message || "Some error occurred while retrieving request."
             });
         });
 };
