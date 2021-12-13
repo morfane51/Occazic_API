@@ -104,7 +104,6 @@ exports.findOne = (req, res) => {
 
     Array_val_func
         .findById(id)
-        .populate('val_func_id')
         .then(data => {
             if (!data)
                 res.status(404).send({message: "Not found request with id " + id});
@@ -125,7 +124,6 @@ exports.findAll = (req, res) => {
 
     Array_val_func
         .find(condition)
-        .populate('val_func_id')
         .then(data => {
             res.send(data);
         })
