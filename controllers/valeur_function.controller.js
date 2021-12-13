@@ -106,10 +106,10 @@ exports.findOne = (req, res) => {
     console.log(id);
 
     Valeur_function.findById(id)
-        /*.populate({
-            path:"category",
-            model:"Category"
-        })*/
+        .populate({
+            path:"array_id",
+            model:"Array_val_func"
+        })
         .then(data => {
             if (!data)
                 res.status(404).send({message: "Not found category with id " + id});
@@ -129,10 +129,10 @@ exports.findAll = (req, res) => {
     var condition = name ? {name: {$regex: new RegExp(name), $options: "i"}} : {};
 
     Valeur_function.find(condition)
-        /*.populate({
-            path:"category",
-            model:"Category"
-        })*/
+        .populate({
+            path:"array_id",
+            model:"Array_val_func"
+        })
         .then(data => {
             res.send(data);
         })
