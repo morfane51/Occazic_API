@@ -4,7 +4,7 @@ const Price_estim = db.price_estimate;
 // Create request for estimate price
 exports.create = (req, res) => {
 // Validate request
-    if (!req.body.category) {
+    if (!req.body.product_category_id) {
         res.status(400).send({message: "Category not be empty!"});
         return;
     }
