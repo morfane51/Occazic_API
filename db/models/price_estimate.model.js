@@ -4,7 +4,7 @@ module.exports = mongoose => {
         {
             name: String,
             surname: String,
-            mail: { type: String, required: true },
+            mail: String,
             product_category_id: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Category',
