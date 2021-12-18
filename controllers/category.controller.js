@@ -1,4 +1,5 @@
 const db = require("../db/models");
+const fs = require("fs");
 const Category = db.Category;
 const Val_func = db.Val_func;
 
@@ -14,7 +15,8 @@ exports.create = async (req, res) => {
     // Create a request
     const addCategory = new Category({
         name: req.body.name,
-        function: req.body.function
+        function: req.body.function,
+        picture: req.files[0].path
     });
     console.log(addCategory);
     console.log(addCategory);
@@ -65,6 +67,8 @@ exports.delete = (req, res) => {
     // Delete request
     Category.findByIdAndRemove(id)
         .then(data => {
+            const pname = data.picture_under.split('images/')[1]
+            fs.unlinkSync(`images/${pname}`)
             if (!data) {
                 res.status(404).send({
                     message: `Cannot delete category with id=${id}. Maybe category was not found!`

@@ -12,7 +12,7 @@ const priceEstim = require("../controllers/price_estimate.controller.js");
 router.post('/price_estim', priceEstim.create);
 
 // Modify simple purchase request
-router.put('/price_estim/:id', auth, priceEstim.update);
+router.put('/price_estim/:id', priceEstim.update);
 
 // Delete simple purchase request
 router.delete('/price_estim/:id', auth, priceEstim.delete);
@@ -30,7 +30,7 @@ const accurateEstim = require("../controllers/accurate_estimate.controller.js");
 router.post('/accurate_estim', multer, accurateEstim.create);
 
 // Modify simple purchase request
-router.put('/accurate_estim/:id', auth, accurateEstim.update);
+router.put('/accurate_estim/:id', accurateEstim.update);
 
 // Delete simple purchase request
 router.delete('/accurate_estim/:id', auth, accurateEstim.delete);
@@ -38,7 +38,7 @@ router.delete('/price_estim', auth, accurateEstim.deleteAll)
 
 // Get simple purchase request
 router.get('/accurate_estim', auth, accurateEstim.findAll);
-router.get('/accurate_estim/:id', auth, accurateEstim.findOne);
+router.get('/accurate_estim/:id', accurateEstim.findOne);
 
 // Route for user
 const user = require("../controllers/user.controller.js");
@@ -66,7 +66,7 @@ module.exports = router;
 const category = require("../controllers/category.controller.js");
 
 // Create fonction
-router.post('/category', auth, category.create);
+router.post('/category', [auth, multer], category.create)
 
 // Modify fonction
 router.put('/category/:id', auth, category.update);
