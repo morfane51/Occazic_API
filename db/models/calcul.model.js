@@ -11,7 +11,7 @@ module.exports = mongoose => {
                 ref: 'price_estimate'
             },
             marge: Number,
-            propose_price: { type: String, required: true }
+            propose_price: { type: Number, required: true }
         },
         {timestamps: true}
     );
