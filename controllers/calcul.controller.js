@@ -23,6 +23,7 @@ exports.run = async (req, res) => {
     const calcul = new Calcul({
         function: category.function,
         category: category._id,
+        marge: category.marge,
         price_estimate: priceEstim._id,
         propose_price: await runCalcul(category.function)
     });

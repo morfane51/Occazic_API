@@ -16,6 +16,7 @@ exports.create = async (req, res) => {
     const addCategory = new Category({
         name: req.body.name,
         function: req.body.function,
+        marge: req.body.marge,
         picture: req.files[0].path
     });
     console.log(addCategory);

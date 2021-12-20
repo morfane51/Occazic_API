@@ -10,6 +10,7 @@ module.exports = mongoose => {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'price_estimate'
             },
+            marge: Number,
             propose_price: { type: String, required: true }
         },
         {timestamps: true}

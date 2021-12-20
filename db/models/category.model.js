@@ -5,6 +5,7 @@ var catSchema = new mongoose.Schema(
 
         name: {type: String, required: true},
         function: {type: String, required: true},
+        marge: Number,
         picture: String,
     }, {
         timestamps: true,
