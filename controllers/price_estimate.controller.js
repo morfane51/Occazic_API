@@ -15,7 +15,8 @@ exports.create = (req, res) => {
         surname: req.body.surname,
         mail: req.body.mail,
         product_category_id: req.body.product_category_id,
-        product_ref: req.body.product_ref
+        product_ref: req.body.product_ref,
+        calcul_id: req.body.calcul_id
     });
     console.log(priceEstim);
     console.log(priceEstim.id);
@@ -107,6 +108,7 @@ exports.findOne = (req, res) => {
     Price_estim
         .findById(id)
         .populate('product_category_id')
+        .populate('calcul_id')
         .then(data => {
             if (!data)
                 res.status(404).send({message: "Not found request with id " + id});
@@ -128,6 +130,7 @@ exports.findAll = (req, res) => {
     Price_estim
         .find(condition)
         .populate('product_category_id')
+        .populate('calcul_id')
         .then(data => {
             res.send(data);
         })

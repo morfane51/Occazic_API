@@ -59,18 +59,19 @@ exports.update = (req, res) => {
 
 // Delete request for estimate price
 exports.delete = (req, res) => {
-    // Recover request with id
-    const id = req.params.id;
-    // Delete request
-    Input_func.findByIdAndRemove(id)
+    // Recover all requests with price_estimate_id
+    const price_estimate_id = req.params.id;
+    console.log(price_estimate_id)
+    // Delete requests
+    Input_func.deleteMany({ price_estimate_id: price_estimate_id})
         .then(data => {
             if (!data) {
                 res.status(404).send({
-                    message: `Cannot delete request with id=${id}. Maybe request was not found!`
+                    message: `Cannot delete requests with id=${price_estimate_id}. Maybe requests was not found!`
                 });
             } else {
                 res.send({
-                    message: "Request was deleted successfully!"
+                    message: `${data.deletedCount} request were deleted successfully!`
                 });
             }
         })
