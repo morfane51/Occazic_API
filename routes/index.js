@@ -107,6 +107,7 @@ router.get('/val_func/:id', val_func.findOne);
 router.get('/val_func', val_func.findAll);
 
 // Delete fonction
+router.delete('/val_func/category/:cat_id', val_func.deleteWithCatId)
 router.delete('/val_func/:id', val_func.delete);
 router.delete('/val_func', val_func.deleteAll);
 
@@ -125,6 +126,7 @@ router.get('/input_func', input_func.findAll);
 
 // Delete arguments value
 router.delete('/input_func/:id', input_func.delete);
+router.delete('/input_func/price_estimate/:price_estimate_id', input_func.deleteWithPriceEstimId)
 router.delete('/input_func', input_func.deleteAll);
 
 // Route for array value

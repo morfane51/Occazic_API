@@ -57,27 +57,51 @@ exports.update = (req, res) => {
         });
 };
 
-// Delete request for estimate price
-exports.delete = (req, res) => {
-    // Recover all requests with price_estimate_id
-    const price_estimate_id = req.params.id;
+// Delete Input Function with price_estimate_id
+exports.deleteWithPriceEstimId = (req, res) => {
+    // Recover all Input Function with price_estimate_id
+    const price_estimate_id = req.params.price_estimate_id;
     console.log(price_estimate_id)
-    // Delete requests
+    // Delete Input Function
     Input_func.deleteMany({ price_estimate_id: price_estimate_id})
         .then(data => {
             if (!data) {
                 res.status(404).send({
-                    message: `Cannot delete requests with id=${price_estimate_id}. Maybe requests was not found!`
+                    message: `Cannot delete input function with id=${price_estimate_id}. Maybe input function was not found!`
                 });
             } else {
                 res.send({
-                    message: `${data.deletedCount} request were deleted successfully!`
+                    message: `${data.deletedCount} input function were deleted successfully!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete request with id=" + id
+                message: "Could not delete input function with id=" + id
+            });
+        });
+};
+
+// Delete Input func
+exports.delete = (req, res) => {
+    // Recover request with id
+    const id = req.params.id;
+    // Delete request
+    Input_func.findByIdAndRemove(id)
+        .then(data => {
+            if (!data) {
+                res.status(404).send({
+                    message: `Cannot delete input with id=${id}. Maybe input was not found!`
+                });
+            } else {
+                res.send({
+                    message: "Input was deleted successfully!"
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete input with id=" + id
             });
         });
 };

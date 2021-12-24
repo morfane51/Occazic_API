@@ -83,6 +83,31 @@ exports.delete = (req, res) => {
         });
 };
 
+// Delete Value Function with price_estimate_id
+exports.deleteWithCatId = (req, res) => {
+    // Recover all Value Function with category id
+    const cat_id = req.params.cat_id;
+    console.log(cat_id)
+    // Delete Value Function
+    Valeur_function.deleteMany({ category: cat_id})
+        .then(data => {
+            if (!data) {
+                res.status(404).send({
+                    message: `Cannot delete value function with id=${cat_id}. Maybe value function was not found!`
+                });
+            } else {
+                res.send({
+                    message: `${data.deletedCount} value function were deleted successfully!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete value function with id=" + id
+            });
+        });
+};
+
 // Delete All category
 exports.deleteAll = (req, res) => {
     Valeur_function.deleteMany({})
