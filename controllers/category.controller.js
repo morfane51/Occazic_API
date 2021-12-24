@@ -68,7 +68,8 @@ exports.delete = (req, res) => {
     // Delete request
     Category.findByIdAndRemove(id)
         .then(data => {
-            const pname = data.picture_under.split('images/')[1]
+            const pname = data.picture.split('images/')[1]
+            console.log(pname)
             fs.unlinkSync(`images/${pname}`)
             if (!data) {
                 res.status(404).send({
@@ -82,7 +83,7 @@ exports.delete = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete category with id=" + id
+                message: "Could not delete category with id=" + id + " Erreur :" + err
             });
         });
 };
