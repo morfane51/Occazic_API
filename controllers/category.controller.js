@@ -14,7 +14,7 @@ exports.create = async (req, res) => {
     }
 
     let picture = 'images/base.png'
-    if (req.files[0]) {
+    if (req.files) {
         picture = req.files[0].path
     }
 
