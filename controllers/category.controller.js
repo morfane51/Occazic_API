@@ -12,12 +12,18 @@ exports.create = async (req, res) => {
         res.status(400).send({message: "Content can not be empty!"});
         return;
     }
+
+    let picture = 'images/base.png'
+    if (req.files[0]) {
+        picture = req.files[0].path
+    }
+
     // Create a request
     const addCategory = new Category({
         name: req.body.name,
         function: req.body.function,
         marge: req.body.marge,
-        picture: req.files[0].path
+        picture: picture
     });
     console.log(addCategory);
     console.log(addCategory);
