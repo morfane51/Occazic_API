@@ -76,7 +76,11 @@ exports.delete = (req, res) => {
         .then(data => {
             const pname = data.picture.split('images/')[1]
             console.log(pname)
-            fs.unlinkSync(`images/${pname}`)
+
+            if(pname !== 'base.png'){
+                fs.unlinkSync(`images/${pname}`)
+            }
+
             if (!data) {
                 res.status(404).send({
                     message: `Cannot delete category with id=${id}. Maybe category was not found!`
