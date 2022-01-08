@@ -13,9 +13,13 @@ exports.create = async (req, res) => {
         return;
     }
 
-    let picture = 'images/base.png'
-    if (req.files) {
-        picture = req.files[0].path
+    let picture = 'images/base.png';
+
+    try{
+        picture = req.files[0].path;
+    }
+    catch{
+        picture = 'images/base.png';
     }
 
     // Create a request
