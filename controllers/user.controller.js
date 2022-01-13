@@ -8,10 +8,11 @@ exports.signup = (req, res) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
-                pseudo: req.body.pseudo,
+                username: req.body.username,
                 password: hash
             });
-            user.save()
+            user
+                .save(user)
                 .then(() => res.status(201).json({message: 'Utilisateur créé !'}))
                 .catch(error => res.status(400).json({error}));
         })
@@ -20,7 +21,7 @@ exports.signup = (req, res) => {
 
 // User login request
 exports.login = (req, res) => {
-    User.findOne({pseudo: req.body.pseudo})
+    User.findOne({username: req.body.username})
         .then(user => {
             if (!user) {
                 return res.status(401).json({error: 'Utilisateur non trouvé !'});
@@ -31,16 +32,24 @@ exports.login = (req, res) => {
                         return res.status(401).json({error: 'Mot de passe incorrect !'});
                     }
                     res.status(200).json({
-                        userId: user._id,
-                        token: jwt.sign(
+                        user_id: user._id,
+                        access_token: jwt.sign(
                             {userId: user._id},
                             'RANDOM_TOKEN_SECRET',
                             {expiresIn: '24h'}
-                        )
+                        ),
+                        token_type: 'bearer'
                     });
                 })
                 .catch(error => res.status(500).json({error}));
         })
+        .catch(error => res.status(500).json({error}));
+};
+
+// User logout request
+exports.logout = (req, res) => {
+    User.findOne({username: req.body.username})
+        .then(req.logout())
         .catch(error => res.status(500).json({error}));
 };
 
@@ -130,8 +139,8 @@ exports.findOne = (req, res) => {
 // Retrieve all user with condition
 exports.findAll = (req, res) => {
     // Recover request with name
-    const name = req.query.pseudo;
-    var condition = name ? {pseudo: {$regex: new RegExp(name), $options: "i"}} : {};
+    const name = req.query.username;
+    var condition = name ? {username: {$regex: new RegExp(name), $options: "i"}} : {};
 
     User.find(condition)
         .then(data => {
