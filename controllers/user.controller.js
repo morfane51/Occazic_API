@@ -47,6 +47,7 @@ exports.login = (req, res) => {
 };
 
 // User logout request
+//TODO: dot not work and maybe not useful
 exports.logout = (req, res) => {
     User.findOne({username: req.body.username})
         .then(req.logout())
