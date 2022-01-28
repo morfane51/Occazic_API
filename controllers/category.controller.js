@@ -56,7 +56,7 @@ exports.update = (req, res) => {
     // Recover request with ID
     const id = req.params.id;
     // Modify a request
-    Category.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
+    Category.findByIdAndUpdate({ _id: id }, req.body, { new: true })
         .then(data => {
             if (!data) {
                 res.status(404).send({
