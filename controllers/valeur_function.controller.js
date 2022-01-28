@@ -48,9 +48,9 @@ exports.update = (req, res) => {
         .then(data => {
             if (!data) {
                 res.status(404).send({
-                    message: `Cannot update category with id=${id}. Maybe category was not found!`
+                    message: `Cannot update Val Func with id=${id}. Maybe Val Func was not found!`
                 });
-            } else res.send({message: "Category was updated successfully."});
+            } else res.send({message: "Val Func was updated successfully."});
         })
         .catch(err => {
             res.status(500).send({
@@ -166,5 +166,28 @@ exports.findAll = (req, res) => {
                 message:
                     err.message || "Some error occurred while retrieving category."
             });
+        });
+};
+
+// Retrieve Val Func with category id
+exports.findWithCatId = (req, res) => {
+    // Recover request with id
+    const cat_id = req.params.cat_id;
+    console.log(cat_id);
+
+    Valeur_function.find({ category: cat_id })
+        .populate({
+            path:"array_id",
+            model:"Array_val_func"
+        })
+        .then(data => {
+            if (!data)
+                res.status(404).send({message: "Not found category with id " + id});
+            else res.send(data);
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .send({message: "Error retrieving category with id=" + id});
         });
 };

@@ -97,6 +97,23 @@ exports.deleteAll = (req, res) => {
         });
 };
 
+// Delete request with Val Func ID
+exports.deleteWithValFuncId = (req, res) => {
+    const val_func_id = req.params.val_func_id
+    Array_val_func.deleteMany({val_func_id: val_func_id})
+        .then(data => {
+            res.send({
+                message: `${data.deletedCount} array value were deleted successfully!`
+            });
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while removing all array value."
+            });
+        });
+};
+
 // Retrieve a single request
 exports.findOne = (req, res) => {
     // Recover request with id
@@ -132,5 +149,24 @@ exports.findAll = (req, res) => {
                 message:
                     err.message || "Some error occurred while retrieving request."
             });
+        });
+};
+
+// Retrieve Array value with Val Func id
+exports.findWithValFuncId = (req, res) => {
+    // Recover request with id
+    const val_func_id = req.params.val_func_id;
+    console.log(val_func_id);
+
+    Array_val_func.find({ val_func_id: val_func_id })
+        .then(data => {
+            if (!data)
+                res.status(404).send({message: "Not found request with id " + id});
+            else res.send(data);
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .send({message: "Error retrieving request with id=" + id});
         });
 };

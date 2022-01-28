@@ -72,7 +72,7 @@ const category = require("../controllers/category.controller.js");
 router.post('/category', [auth, multer], category.create)
 
 // Modify fonction
-router.put('/category/:id', auth, category.update);
+router.put('/category/:id', category.update);
 
 // Get fonction
 router.get('/category/:id', category.findOne);
@@ -103,11 +103,12 @@ const val_func = require("../controllers/valeur_function.controller.js");
 router.post('/val_func', auth, val_func.create);
 
 // Modify fonction
-router.put('/val_func/:id', auth, val_func.update);
+router.put('/val_func/:id', val_func.update);
 
 // Get fonction
 router.get('/val_func/:id', val_func.findOne);
 router.get('/val_func', auth, val_func.findAll);
+router.get('/val_func/category/:cat_id', val_func.findWithCatId);
 
 // Delete fonction
 router.delete('/val_func/category/:cat_id', auth, val_func.deleteWithCatId)
@@ -144,7 +145,10 @@ router.put('/array_val/:id', auth, array_val_func.update);
 // Get array value
 router.get('/array_val/:id', array_val_func.findOne);
 router.get('/array_val', array_val_func.findAll);
+router.get('/array_val/val_func/:val_func_id', array_val_func.findWithValFuncId);
+
 
 // Delete array value
 router.delete('/array_val/:id', auth, array_val_func.delete);
 router.delete('/array_val', auth, array_val_func.deleteAll);
+router.delete('/array_val/val_func/:val_func_id', auth, array_val_func.deleteWithValFuncId);
