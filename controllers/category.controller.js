@@ -126,6 +126,7 @@ exports.findOne = (req, res) => {
     Category
         .findById(id)
         .populate('val_func')
+        .populate('sub_category')
         .then(data => {
             if (!data)
                 res.status(404).send({message: "Not found category with id " + id});
@@ -147,6 +148,7 @@ exports.findAll = (req, res) => {
     Category
         .find(condition)
         .populate('val_func') // <- use the populate() function
+        .populate('sub_category')
         .then(data => {
             if (!data)
                 res.status(404).send({message: "Not found category with id " + id});
