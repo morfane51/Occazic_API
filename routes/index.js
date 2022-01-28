@@ -65,6 +65,23 @@ router.delete('/user/:id', auth, user.delete);
 
 module.exports = router;
 
+// Route for sub-category
+const subCategory = require("../controllers/sub-category.controller.js");
+
+// Create fonction
+router.post('/sub-category', [multer], subCategory.create)
+
+// Modify fonction
+router.put('/sub-category/:id', auth, subCategory.update);
+
+// Get fonction
+router.get('/sub-category/:id', subCategory.findOne);
+router.get('/sub-category', subCategory.findAll);
+
+// Delete fonction
+router.delete('/sub-category/:id', auth, subCategory.delete);
+router.delete('/sub-category', auth, subCategory.deleteAll);
+
 // Route for category
 const category = require("../controllers/category.controller.js");
 
@@ -130,7 +147,7 @@ router.get('/input_func', input_func.findAll);
 
 // Delete arguments value
 router.delete('/input_func/:id', auth, input_func.delete);
-router.delete('/input_func/price_estimate/:price_estimate_id', auth, input_func.deleteWithPriceEstimId)
+router.delete('/input_func/price_estim/:price_estim_id', auth, input_func.deleteWithPriceEstimId)
 router.delete('/input_func', auth, input_func.deleteAll);
 
 // Route for array value
