@@ -27,9 +27,9 @@ exports.create = async (req, res) => {
         name: req.body.name,
         function: req.body.function,
         marge: req.body.marge,
-        picture: picture
+        picture: picture,
+        sub_category: req.body.sub_category
     });
-    console.log(addCategory);
     console.log(addCategory);
 
     // Save request in mongodb
