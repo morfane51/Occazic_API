@@ -160,3 +160,23 @@ exports.findAll = (req, res) => {
                 .send({message: "Error retrieving category with id=" + id});
         });
 };
+
+// Retrieve all category with Root Category id
+exports.findWithRootCategory = (req, res) => {
+    // Recover request with name
+    const rootCat = req.params.root_cat;
+
+    Category.find({ sub_category: rootCat })
+        .populate('val_func') // <- use the populate() function
+        .populate('sub_category')
+        .then(data => {
+            if (!data)
+                res.status(404).send({message: "Not found category with id " + id});
+            else res.send(data);
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .send({message: "Error retrieving category with id=" + id});
+        });
+};

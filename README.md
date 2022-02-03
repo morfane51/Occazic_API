@@ -13,6 +13,7 @@
 | `/category/:id`                           | `PUT`       | `<name>`; `<function>`; `<marge>`; `<image>`; `<sub_category>`            | Modify category with id.                                          |
 | `/category/:id`                           | `GET`       |                                                                           | Found one category with id.                                       |
 | `/category`                               | `GET`       |                                                                           | Found all category.                                               |
+| `/category/root_category/:root_cat`       | `GET`       |                                                                           | Found all category with root category id.                         |
 | `/category/:id`                           | `DELETE`    |                                                                           | Delete one category with id.                                      |
 | `/category`                               | `DELETE`    |                                                                           | Delete all category.                                              |
 | ---------------------------               |             |                                                                           |                                                                   |

@@ -94,6 +94,7 @@ router.put('/category/:id', category.update);
 // Get fonction
 router.get('/category/:id', category.findOne);
 router.get('/category', category.findAll);
+router.get('/category/root_category/:root_cat', category.findWithRootCategory);
 
 // Delete fonction
 router.delete('/category/:id', auth, category.delete);
@@ -124,7 +125,7 @@ router.put('/val_func/:id', val_func.update);
 
 // Get fonction
 router.get('/val_func/:id', val_func.findOne);
-router.get('/val_func', auth, val_func.findAll);
+router.get('/val_func', val_func.findAll);
 router.get('/val_func/category/:cat_id', val_func.findWithCatId);
 
 // Delete fonction
