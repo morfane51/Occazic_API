@@ -1,4 +1,20 @@
 # API Occazic 
+### Classic Installation :
+
+
+Copy repository and use `npm install` then `npm start`.
+
+### Docker Installation :
+
+Copy repository and use Dockerfile.
+
+#### Docker Compose :
+
+This docker compose gather Occazic API, Occazic Admin, Occazic Front and MongoDB. 
+
+
+
+
 
 | Endpoint                                  | HTTP Method | JSON Body                                                                 | Description                                                       |
 |-------------------------------------------|-------------|---------------------------------------------------------------------------|-------------------------------------------------------------------|
