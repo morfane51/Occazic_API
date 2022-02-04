@@ -1,0 +1,35 @@
+services:
+  occazic_front:
+    image: occazic/front
+    container_name: occazic_front
+    depends_on:
+      - occazic_api
+    ports:
+      - 8000:80
+
+  occazic_admin:
+    image: occazic/admin
+    container_name: occazic_admin
+    depends_on:
+      - occazic_api
+    ports:
+      - 8001:80
+
+  occazic_api:
+    image: occazic/api
+    container_name: occazic_api
+    depends_on:
+      - mongo
+    ports:
+      - 3000:3000
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    environment:
+      #    MONGO_INITDB_ROOT_USERNAME: root
+      #    MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: occazic_db
+    ports:
+      - 27017:27017
