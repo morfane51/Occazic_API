@@ -10,11 +10,15 @@ var indexRouter = require('./routes/index');
 var app = express();
 
 
-
 // DB MongoDB
 const db = require("./db/models");
 db.mongoose
     .connect(db.url, {
+        auth: {
+            username:'root',
+            password:'password'
+        },
+        authSource:"admin",
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
@@ -25,6 +29,10 @@ db.mongoose
         console.log("Cannot connect to the database!", err);
         process.exit();
     });
+
+console.log('-----------------------------------------------------');
+console.log(db.url);
+console.log('-----------------------------------------------------');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

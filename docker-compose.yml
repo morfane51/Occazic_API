@@ -2,6 +2,7 @@ services:
   occazic_front:
     image: occazic/front
     container_name: occazic_front
+    restart: always
     depends_on:
       - occazic_api
     ports:
@@ -10,6 +11,7 @@ services:
   occazic_admin:
     image: occazic/admin
     container_name: occazic_admin
+    restart: always
     depends_on:
       - occazic_api
     ports:
@@ -18,6 +20,9 @@ services:
   occazic_api:
     image: occazic/api
     container_name: occazic_api
+    restart: always
+    volumes:
+      - /home/aymeric/Documents/images:/app/occazic_api/images
     depends_on:
       - mongo
     ports:
@@ -28,8 +33,10 @@ services:
     image: mongo
     restart: always
     environment:
-      #    MONGO_INITDB_ROOT_USERNAME: root
-      #    MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_DATABASE: occazic_db
     ports:
       - 27017:27017
+    volumes:
+      - /home/aymeric/Documents/occazic_db:/data/db
