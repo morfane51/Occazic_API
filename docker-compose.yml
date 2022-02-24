@@ -5,8 +5,7 @@ services:
     restart: always
     depends_on:
       - occazic_api
-    ports:
-      - 8000:80
+
 
   occazic_admin:
     image: occazic/admin
@@ -14,8 +13,7 @@ services:
     restart: always
     depends_on:
       - occazic_api
-    ports:
-      - 8001:80
+
 
   occazic_api:
     image: occazic/api
@@ -40,3 +38,20 @@ services:
       - 27017:27017
     volumes:
       - /home/aymeric/Documents/occazic_db:/data/db
+
+  reverse-proxy:
+    image: nginx
+    links:
+      - occazic_admin
+      - occazic_front
+    depends_on:
+      - occazic_admin
+      - occazic_front
+    volumes:
+      - /home/aymeric/Codage/Occazic/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+
+
+
+
