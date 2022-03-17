@@ -1,6 +1,6 @@
 FROM node:16
 
-WORKDIR /app/occazic_api
+WORKDIR /app/occasion_api
 
 COPY package.json ./
 
