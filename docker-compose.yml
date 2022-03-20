@@ -1,6 +1,6 @@
 services:
   occasion_front:
-    image: occasion/front
+    image: bosseur31/occasion_front
     container_name: occasion_front
     restart: always
     depends_on:
@@ -8,7 +8,7 @@ services:
 
 
   occasion_admin:
-    image: occasion/admin
+    image: bosseur31/occasion_admin
     container_name: occasion_admin
     restart: always
     depends_on:
@@ -16,7 +16,7 @@ services:
 
 
   occasion_api:
-    image: occasion/api
+    image: bosseur31/occasion_api
     container_name: occasion_api
     restart: always
     volumes:
@@ -37,7 +37,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - /home/aymeric/Documents/occazic_db:/data/db
+      - /srv/prozic_occasion/occazic_db:/data/db
 
   reverse-proxy:
     image: nginx
