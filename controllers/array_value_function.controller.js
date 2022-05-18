@@ -4,7 +4,7 @@ const Array_val_func = db.Array_val_func;
 // Create request for estimate price
 exports.create = (req, res) => {
 // Validate request
-    if (!req.body.value) {
+    if (!req.body.name) {
         res.status(400).send({message: "Content can not be empty!"});
         return;
     }
