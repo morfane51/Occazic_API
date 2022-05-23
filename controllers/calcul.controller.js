@@ -46,7 +46,9 @@ exports.run = async (req, res) => {
 // Function calcul function with val_func
     async function runCalcul(func) {
         const tab_val = [];
+        // recovery of a calculation function
         var globalFunction = func;
+
         while (globalFunction.includes('{')) {
             // Found var with special characters
             var t_val = globalFunction.substring(
@@ -61,14 +63,22 @@ exports.run = async (req, res) => {
             const priceEstim_id = priceEstim._id;
             const category_id = category._id;
 
-
+            // Call value fonction with name of var and category id
             const condition_val = {name: t_val, category: category_id};
             const val_func = await Val_func.findOne(condition_val);
 
             const valFunc_id = val_func._id
 
+            // Verify value fonction is not text input
+            if (val_func.text){
+                res.status(400).send({message: "In function, one var is a text entry !"});
+            }
+
+            // Call user entry for this var with var id and priceEstim_id
             const condition = {price_estimate_id: priceEstim_id, val_func_id: valFunc_id};
             const input_func = await Input_func.findOne(condition);
+
+            // Result of var in list
             tab_val.push(input_func.value);
 
         }

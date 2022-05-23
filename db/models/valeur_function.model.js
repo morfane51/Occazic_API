@@ -4,6 +4,7 @@ module.exports = mongoose => {
         {
             name: {type: String, required: true},
             array: {type: Boolean, required: true},
+            text: {type: Boolean, required: true},
             array_id: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Array_val_func'
