@@ -145,6 +145,7 @@ router.put('/input_func/:id', input_func.update);
 // Get arguments value
 router.get('/input_func/:id', input_func.findOne);
 router.get('/input_func', input_func.findAll);
+router.get('/input_func/price_estim/:price_estim_id', auth, input_func.findWithPriceEstimId)
 
 // Delete arguments value
 router.delete('/input_func/:id', auth, input_func.delete);

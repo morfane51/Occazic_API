@@ -60,8 +60,7 @@ exports.update = (req, res) => {
 // Delete Input Function with price_estimate_id
 exports.deleteWithPriceEstimId = (req, res) => {
     // Recover all Input Function with price_estimate_id
-    const price_estimate_id = req.params.price_estimate_id;
-    console.log(price_estimate_id)
+    const price_estimate_id = req.params.price_estim_id;
     // Delete Input Function
     Input_func.deleteMany({ price_estimate_id: price_estimate_id})
         .then(data => {
@@ -159,5 +158,24 @@ exports.findAll = (req, res) => {
                 message:
                     err.message || "Some error occurred while retrieving request."
             });
+        });
+};
+
+// Retrieve Input func with category id
+exports.findWithPriceEstimId = (req, res) => {
+    // Recover request with id
+    const price_estimate_id = req.params.price_estim_id;
+
+    Input_func.find({ price_estimate_id: price_estimate_id})
+        .populate('price_estimate_id val_func_id')
+        .then(data => {
+            if (!data)
+                res.status(404).send({message: "Not found request with this price estimate id " + id});
+            else res.send(data);
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .send({message: "Error retrieving request with this price estimate id=" + id});
         });
 };
