@@ -67,6 +67,10 @@ exports.run = async (req, res) => {
             const condition_val = {name: t_val, category: category_id};
             const val_func = await Val_func.findOne(condition_val);
 
+            if (val_func._id === null || val_func._id === undefined){
+                res.status(400).send({message: "In function, one var is not valid !"});
+            }
+
             const valFunc_id = val_func._id
 
             // Verify value fonction is not text input
