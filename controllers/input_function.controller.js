@@ -13,7 +13,8 @@ exports.create = (req, res) => {
     const inputFunc = new Input_func({
         value: req.body.value,
         price_estimate_id: req.body.price_estimate_id,
-        val_func_id: req.body.val_func_id
+        val_func_id: req.body.val_func_id,
+        val_func_array_id: req.body.val_func_array_id
     });
     console.log(inputFunc);
     console.log(inputFunc.id);
@@ -128,7 +129,7 @@ exports.findOne = (req, res) => {
 
     Input_func
         .findById(id)
-        .populate('price_estimate_id val_func_id')
+        .populate('price_estimate_id val_func_id val_func_array_id')
         .then(data => {
             if (!data)
                 res.status(404).send({message: "Not found request with id " + id});
@@ -149,7 +150,7 @@ exports.findAll = (req, res) => {
 
     Input_func
         .find(condition)
-        .populate('price_estimate_id val_func_id')
+        .populate('price_estimate_id val_func_id val_func_array_id')
         .then(data => {
             res.send(data);
         })
@@ -167,7 +168,7 @@ exports.findWithPriceEstimId = (req, res) => {
     const price_estimate_id = req.params.price_estim_id;
 
     Input_func.find({ price_estimate_id: price_estimate_id})
-        .populate('price_estimate_id val_func_id')
+        .populate('price_estimate_id val_func_id val_func_array_id')
         .then(data => {
             if (!data)
                 res.status(404).send({message: "Not found request with this price estimate id " + id});
