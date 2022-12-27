@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -13,10 +14,10 @@ var app = express();
 // DB MongoDB
 const db = require("./db/models");
 db.mongoose
-    .connect(db.url, {
+    .connect('mongodb://' + process.env.MONGO_INITDB_ROOT_USERNAME + ':' + process.env.MONGO_INITDB_ROOT_PASSWORD + '@mongo:27017/' + process.env.MONGO_INITDB_DATABASE + '', {
         auth: {
-            username:'root',
-            password:'password'
+            username: process.env.MONGO_INITDB_ROOT_USERNAME,
+            password: process.env.MONGO_INITDB_ROOT_PASSWORD
         },
         authSource:"admin",
         useNewUrlParser: true,
@@ -31,7 +32,7 @@ db.mongoose
     });
 
 console.log('-----------------------------------------------------');
-console.log(db.url);
+console.log('mongodb://' + process.env.MONGO_INITDB_ROOT_USERNAME + ':' + process.env.MONGO_INITDB_ROOT_PASSWORD + '@mongo:27017/' + process.env.MONGO_INITDB_DATABASE + '');
 console.log('-----------------------------------------------------');
 
 // catch 404 and forward to error handler
