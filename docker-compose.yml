@@ -1,56 +1,53 @@
-services:
-  occasion_front:
-    image: occasion_front
-    container_name: occasion_front
-    restart: always
-    depends_on:
-      - occasion_api
+mongo:
+  container_name: mongo
+  image: mongo
+  restart: always
+  environment:
+    MONGO_INITDB_ROOT_USERNAME: root
+    MONGO_INITDB_ROOT_PASSWORD: password
+    MONGO_INITDB_DATABASE: occazic_db
+  ports:
+    - 27017:27017
+  volumes:
+    - ./../occazic_db:/data/db
 
+occasion_api:
+  image: occasion_api
+  container_name: occasion_api
+  restart: always
+  volumes:
+    - ./../images:/app/occasion_api/images
+#  depends_on:
+#    - mongo
 
-  occasion_admin:
-    image: occasion_admin
-    container_name: occasion_admin
-    restart: always
-    depends_on:
-      - occasion_api
+occasion_front:
+  image: occasion_front
+  container_name: occasion_front
+  restart: always
+#  depends_on:
+#    - occasion_api
 
+occasion_admin:
+  image: occasion_admin
+  container_name: occasion_admin
+  restart: always
+#  depends_on:
+#    - occasion_api
 
-  occasion_api:
-    image: occasion_api
-    container_name: occasion_api
-    restart: always
-    volumes:
-      - ./../images:/app/occasion_api/images
-    depends_on:
-      - mongo
-
-  mongo:
-    container_name: mongo
-    image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: occazic_db
-    ports:
-      - 27017:27017
-    volumes:
-      - ./../occazic_db:/data/db
-
-  reverse-proxy:
-    image: nginx
-    container_name: reverse_proxy
-    links:
-      - occasion_admin
-      - occasion_front
-      - occasion_api
-    depends_on:
-      - occasion_admin
-      - occasion_front
-      - occasion_api
-    volumes:
-      - ./default.conf:/etc/nginx/conf.d/default.conf
-    ports:
-      - 80:80
-      - 443:443
-      - 3000:3000
+reverse-proxy:
+  image: nginx
+  container_name: reverse_proxy
+  links:
+    - occasion_admin
+    - occasion_front
+    - occasion_api
+#  depends_on:
+#    - occasion_admin
+#    - occasion_front
+#    - occasion_api
+  volumes:
+    - ./default.conf:/etc/nginx/conf.d/default.conf
+  ports:
+    - 80:80
+    - 443:443
+    - 3000:3000
