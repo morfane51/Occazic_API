@@ -14,15 +14,7 @@ var app = express();
 // DB MongoDB
 const db = require("./db/models");
 db.mongoose
-    .connect('mongodb://' + process.env.MONGO_INITDB_ROOT_USERNAME + ':' + process.env.MONGO_INITDB_ROOT_PASSWORD + '@mongo:27017/' + process.env.MONGO_INITDB_DATABASE + '', {
-        auth: {
-            username: process.env.MONGO_INITDB_ROOT_USERNAME,
-            password: process.env.MONGO_INITDB_ROOT_PASSWORD
-        },
-        authSource:"admin",
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
+    .connect('mongodb://' + process.env.MONGO_INITDB_ROOT_USERNAME + ':' + process.env.MONGO_INITDB_ROOT_PASSWORD + '@mongo:27017/' + process.env.MONGO_INITDB_DATABASE + '?authSource=admin')
     .then(() => {
         console.log("Connected to the database!");
     })
